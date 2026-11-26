@@ -1,0 +1,23 @@
+# Changelog
+
+All notable changes to this project are documented here.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Added
+
+- Cargo workspace with the planned crate layout (contract, gateway, host,
+  platform, git, terminal, preview, update, ui) and the `hermes-native` binary.
+- Product requirements (`docs/PRD.md`), delivery plan (`docs/PLAN.md`), and
+  tooling notes (`docs/TOOLING.md`).
+- The gate: `scripts/{build,lint,test,check}.sh`, a pre-push hook, and
+  `deny.toml`.
+- Open-source project files: licence, contributing guide, code of conduct,
+  security policy, issue and pull-request templates.
+
+## [0.1.0] - unreleased
+
+No release has been cut. A tag is a decision, not a pipeline test.

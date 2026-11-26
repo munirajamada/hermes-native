@@ -1,0 +1,40 @@
+# Rust build output
+/target/
+**/*.rs.bk
+*.pdb
+*.profraw
+*.profdata
+
+# Packaged output
+/dist/
+/release/
+
+# Tooling working state (tracked records live in openspec/)
+.planning/
+.codegraph/
+
+# Logs and traces
+*.log
+logs/
+perf.data
+perf.data.old
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~

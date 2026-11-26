@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Refuse a push while the gate fails. SKIP_GATE=1 is the recorded bypass.
+if [ "${SKIP_GATE:-}" = "1" ]; then
+  echo "pre-push: gate skipped (SKIP_GATE=1)"
+  exit 0
+fi
+exec "$(git rev-parse --show-toplevel)/scripts/check.sh"
