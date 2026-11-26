@@ -226,3 +226,4 @@ Baselines are measured, not copied from vendor claims. A metric without a measur
 - Contract generator: `scripts/gen_gateway_contracts.py` (Pydantic → TypeScript + OpenRPC). Extend with a Rust emitter.
 - Installed Obscura: `0.1.0-dev+74b4bec` (pre-rendering). Rendering/screencast arrived in v0.2.0. Agent-side only.
 - gpui-kit / gpui-webview / gpui-component `0.11.0`; gpui-fast `0.1.19` (released 2026-11-23).
+- Verified 2026-11-27 (sway, XWayland): `gpui-webview` 0.11.0 builds in 3m56s and renders `example.com`; requires `GDK_BACKEND=x11`. Without it, `gtk::init()` fails. `gpui-fast` exposes `wlr-layer-shell` (Background/Bottom/Top/Overlay), so HUD overlays are possible; the webview itself still refuses Wayland.

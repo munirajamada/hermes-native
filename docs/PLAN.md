@@ -131,6 +131,12 @@ PreviewEngine (trait)
 - Persist cookies/storage per profile for logins.
 - OAuth/login flows use the real webview, never Obscura.
 
+**Verified on this machine** (sway session, XWayland, WebKitGTK 2.54.3,
+GTK 3.24.52, 2026-11-27): `gpui-webview` 0.11.0 builds and renders
+`example.com` only with `GDK_BACKEND=x11`; without it `gtk::init()` fails with
+"Failed to initialize GTK". Native Wayland is impossible for this pane because
+GTK cannot embed into a Wayland surface it does not own.
+
 ---
 
 ## 7. Parity checklist

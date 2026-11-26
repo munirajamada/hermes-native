@@ -45,6 +45,10 @@ output. A compressed summary is not evidence.
 - Pinned stack: `gpui-kit` / `gpui-webview` / `gpui-component` 0.11.0,
   `gpui-fast` 0.1.19. Versions must agree.
 - Linux target is X11/XWayland. Native Wayland is out of scope for v1.
+- On a Wayland session, set `GDK_BACKEND=x11` and start with
+  `gpui_kit::platform::linux(WindowingModes::X11)`. Without it, `gtk::init()`
+  fails with "Failed to initialize GTK" and the webview never builds (verified
+  on sway/XWayland).
 - Ponytail is active: the smallest complete change; no speculative features.
 
 ## Working notes
