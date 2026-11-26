@@ -8,6 +8,7 @@ replaces the Electron shell and React renderer.
 
 - `docs/PRD.md` — requirements, acceptance, scope. Canonical for *what*.
 - `docs/PLAN.md` — architecture, crates, phases. Canonical for *how*.
+- `docs/VERIFICATION.md` — stack assumptions, tested end to end.
 - `docs/TOOLING.md` — the gate and supply chain.
 
 ## Commands
@@ -17,6 +18,12 @@ scripts/build.sh        # cargo build --workspace --locked
 scripts/lint.sh         # fmt check + clippy -D warnings
 scripts/test.sh         # cargo test --workspace --locked
 scripts/check.sh        # the gate: lint, then tests
+```
+
+To talk to a local gateway:
+
+```sh
+hermes gateway attach --json   # url + 30s ticket + subprotocols; dial with them
 ```
 
 Run `scripts/check.sh` before claiming work is complete, and quote its raw

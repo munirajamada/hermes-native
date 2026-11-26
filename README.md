@@ -48,6 +48,7 @@ scripts/check.sh    # the gate: fmt, clippy, tests
 
 - [`docs/PRD.md`](docs/PRD.md) — requirements and acceptance
 - [`docs/PLAN.md`](docs/PLAN.md) — architecture, crates, phases
+- [`docs/VERIFICATION.md`](docs/VERIFICATION.md) — stack assumptions, tested
 - [`docs/TOOLING.md`](docs/TOOLING.md) — the gate and supply chain
 - [`AGENTS.md`](AGENTS.md) — instructions for coding agents
 
