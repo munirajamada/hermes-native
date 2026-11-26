@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Open-source project files: licence, contributing guide, code of conduct,
   security policy, issue and pull-request templates.
 
+### Verified
+
+- End-to-end stack verification: webview on XWayland, composition overlays
+  above the page, layer-shell on native Wayland, and a gateway `session.list`
+  round-trip. See `docs/VERIFICATION.md`.
+
 ## [0.1.0] - unreleased
 
 No release has been cut. A tag is a decision, not a pipeline test.

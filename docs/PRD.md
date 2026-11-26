@@ -123,8 +123,9 @@ The definition of "all features" is the checklist in the plan (§7): shell, chat
 ### 4.5 Dependencies and constraints
 
 - `hermes serve` exposing the `tui_gateway` JSON-RPC/WebSocket API and HTTP endpoints.
+- Local attach: `hermes gateway attach --json` (URL, 30-second single-use ticket, subprotocols). Verified 2026-11-27.
 - `gpui-kit` 0.11.0, `gpui-component` 0.11.0, `gpui-webview` 0.11.0, `gpui-fast` 0.1.19 (versions must agree).
-- WebKitGTK and GTK3 development headers; X11/XWayland at runtime.
+- WebKitGTK 4.1 and GTK3 development headers; X11/XWayland at runtime; `GDK_BACKEND=x11` on a Wayland session.
 - `portable-pty` and a VT crate for the terminal.
 - `git2`/`gix` for review.
 - Obscura sidecar (agent-side only; never the in-app browser).
@@ -151,7 +152,7 @@ Phases and exit criteria live in the plan (§8). Summary:
 
 | # | Question | Owner | Due |
 |---|---|---|---|
-| Q1 | Does the webview wrapper need to stay on X11, or can it follow `gpui-fast` Wayland composition? | Platform | Before P3 |
+| Q1 | Webview on native Wayland: can it follow `gpui-fast` composition? **Verified no** — wry/WebKitGTK needs an X11 window; layer-shell works separately. | Platform | Answered 2026-11-27 |
 | Q2 | Is native Wayland a v1 requirement or a follow-up? (Current answer: follow-up.) | Product | Before P3 |
 | Q3 | Bundled Python payload ever, or permanent connect-to-existing? | Product | Before v1 |
 | Q4 | What is the accessibility bar for v1 — core flows only, or full WCAG 2.2 AA? | Product | Before P2 |
@@ -161,8 +162,10 @@ Phases and exit criteria live in the plan (§8). Summary:
 ### Assumptions
 
 - The gateway contract is stable enough to generate Rust types from; drift is caught by regeneration in CI.
-- `gpui-webview` builds and runs on the target X11/XWayland machine with WebKitGTK installed.
-- The Electron reference clone is available for parity review (not yet cloned into the project).
+- **Verified 2026-11-27:** `gpui-webview` 0.11.0 builds and renders on XWayland with WebKitGTK 2.54.3 and GTK 3.24.52, and requires `GDK_BACKEND=x11`.
+- **Verified 2026-11-27:** deferred GPUI overlays render above the native webview; a layer-shell overlay works on native Wayland.
+- **Verified 2026-11-27:** the local gateway answers `attach` → WebSocket with ticket subprotocols → `session.list`.
+- The Electron reference clone is available at `agents/_reference/hermes-agent` (`46c47112`, 2026-11-26).
 
 ---
 
@@ -207,7 +210,7 @@ Baselines are measured, not copied from vendor claims. A metric without a measur
 
 | Risk | Impact | Mitigation |
 |---|---|---|
-| Webview wrapper requires X11; Wayland users blocked | Adoption on native Wayland | Ship XWayland; track upstream composition; Q1/Q2 |
+| Webview wrapper requires X11; Wayland users blocked | Adoption on native Wayland | Ship XWayland; track upstream composition; Q2 |
 | `gpui-*` crates churn or version drift | Build breaks mid-phase | Pin 0.11.0; isolate in `hermes-ui`; upgrade deliberately |
 | Contract drift across 263 methods | Silent protocol breakage | Generated types; regenerate-and-diff CI |
 | GPUI accessibility/IME weaker than Chromium | Usability gap | Dedicated P5 pass; document gaps; Q4 |
@@ -227,3 +230,4 @@ Baselines are measured, not copied from vendor claims. A metric without a measur
 - Installed Obscura: `0.1.0-dev+74b4bec` (pre-rendering). Rendering/screencast arrived in v0.2.0. Agent-side only.
 - gpui-kit / gpui-webview / gpui-component `0.11.0`; gpui-fast `0.1.19` (released 2026-11-23).
 - Verified 2026-11-27 (sway, XWayland): `gpui-webview` 0.11.0 builds in 3m56s and renders `example.com`; requires `GDK_BACKEND=x11`. Without it, `gtk::init()` fails. `gpui-fast` exposes `wlr-layer-shell` (Background/Bottom/Top/Overlay), so HUD overlays are possible; the webview itself still refuses Wayland.
+- Verified 2026-11-27: `hermes gateway attach --json` → dial with its subprotocols → `gateway.ready` and `session.list` answer. Without the ticket subprotocol the socket returns `403`.

@@ -20,8 +20,17 @@ cd hermes-native
 scripts/install-hooks.sh   # core.hooksPath = .githooks
 ```
 
-You need Rust 1.100+ and cargo. The preview pane will additionally need
-WebKitGTK and GTK3 headers; nothing else has platform dependencies yet.
+You need Rust 1.100+ and cargo. The preview pane needs WebKitGTK 4.1 and GTK3
+development headers, and runs on X11/XWayland; on a Wayland session start with
+`GDK_BACKEND=x11`. Nothing else has platform dependencies yet.
+
+To exercise the real backend:
+
+```sh
+hermes gateway attach --json   # URL, 30s ticket, subprotocols to dial with
+```
+
+`docs/VERIFICATION.md` records what has been tested end to end.
 
 ## The gate
 

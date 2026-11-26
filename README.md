@@ -6,6 +6,8 @@ written in Rust with [gpui-kit](https://gpui-kit.com). Linux first.
 > **Status: pre-alpha scaffold.** The workspace, documentation, and tooling
 > exist. There is no UI yet. The Python agent is unmodified and runs
 > separately (`hermes serve`); this project is the desktop shell only.
+> The core stack is verified end to end — see
+> [`docs/VERIFICATION.md`](docs/VERIFICATION.md).
 
 HermesNative is an independent client. Hermes is a project of Nous Research.
 
@@ -16,10 +18,12 @@ client keeps the same agent and the same gateway protocol, in a native shell.
 
 ## Requirements
 
-- Linux on X11 or XWayland (native Wayland is out of scope for v1)
+- Linux on X11 or XWayland (native Wayland is out of scope for v1; on a
+  Wayland session the webview needs `GDK_BACKEND=x11`)
 - Rust 1.100+ (edition 2024) and cargo
 - A running Hermes gateway, local or remote
-- Later, for the preview pane: WebKitGTK and GTK3 development headers
+- For the preview pane: WebKitGTK 4.1 and GTK3 development headers
+  (verified with WebKitGTK 2.54.3 / GTK 3.24.52)
 
 ## Build
 

@@ -1,5 +1,14 @@
 # Tooling
 
+## System requirements
+
+- X11 or XWayland at runtime. On a Wayland session the webview needs
+  `GDK_BACKEND=x11`; without it GTK initialization fails.
+- WebKitGTK 4.1 (`webkit2gtk-4.1`) and GTK 3 (`gtk+-3.0`) development headers
+  for `gpui-webview`.
+- Disk: a gpui / gpui-fast build is roughly 6.6 GB of `target/`. Keep it on a
+  real filesystem; `/tmp` is a 6.8 GB tmpfs here and the linker dies.
+
 ## The gate
 
 | Script | Job |

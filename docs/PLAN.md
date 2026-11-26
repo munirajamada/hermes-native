@@ -31,6 +31,7 @@ Backend API surface: 263 methods, 79 notifications, 16 server→client requests,
 | UI framework | `gpui-kit` **0.11.0** (+ `gpui-component` 0.11.0, `gpui-fast` 0.1.19) |
 | In-client browser | **`gpui-webview` 0.11.0** (wry → WebKitGTK on Linux) |
 | Webview display server | **X11 / XWayland** (`gpui_kit::platform::linux(WindowingModes::X11)`) |
+| Webview runtime on Wayland | **`GDK_BACKEND=x11`**, or GTK init fails |
 | Overlays above webview | `gpui-fast` feature on **both** `gpui-kit` and `gpui-webview` (versions must match) |
 | Backend acquisition | Connect to an existing local `hermes serve` or a saved remote/cloud gateway. No bundled Python. |
 | Contract types | Generated from the backend's OpenRPC contract, not hand-written |
@@ -87,6 +88,7 @@ This is the highest-leverage part. Do it first and do it properly.
 - **Codegen:** extend `scripts/gen_gateway_contracts.py` with a Rust emitter writing `hermes-contract/src/generated.rs`. It already walks the supported JSON-Schema subset (objects, enums, const, anyOf-null, arrays, `$ref`, oneOf+discriminator). Reuse that walker; do not write a second generator.
 - **Sync check:** CI regenerates and diffs the Rust output, exactly like the TypeScript lane does.
 - **Auth:** token and OAuth modes; store secrets in the OS keyring (equivalent of Electron `safeStorage`).
+- **Local dial (verified):** `hermes gateway attach --json` returns the WebSocket URL, a 30-second single-use ticket, and the subprotocols; dial with those or the handshake is `403`. Confirmed: `gateway.ready`, then `session.list`.
 - **Profiles/connections:** multiple gateways, soft switch (wipe gateway-bound stores, invalidate queries, repopulate) without cold boot or cancelling turns.
 
 ---
