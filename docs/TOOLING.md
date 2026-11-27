@@ -8,8 +8,9 @@
   for `gpui-webview`.
 - Disk: a gpui / gpui-fast build is roughly 6.6 GB of `target/`. Keep it on a
   real filesystem; `/tmp` is a 6.8 GB tmpfs here and the linker dies.
-- Headless UI tests need a display: `xvfb-run` (`xorg-server-xvfb`) or a live
-  X11/XWayland session. `scripts/ui-test.sh` uses either.
+- Headless UI tests need a display: `xvfb-run` (`xorg-server-xvfb`), a live
+  X11/XWayland session, or `sway` with its headless backend.
+  `scripts/ui-test.sh` picks the first available.
 
 ## The gate
 
