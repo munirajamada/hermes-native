@@ -3,10 +3,10 @@
 A native desktop client for [Hermes](https://github.com/NousResearch/hermes-agent),
 written in Rust with [gpui-kit](https://gpui-kit.com). Linux first.
 
-> **Status: pre-alpha scaffold.** The workspace, documentation, and tooling
-> exist. There is no UI yet. The Python agent is unmodified and runs
-> separately (`hermes serve`); this project is the desktop shell only.
-> The core stack is verified end to end — see
+> **Status: pre-alpha.** The first window opens and round-trips
+> `session.list` against a live gateway. Chat and panes are not built yet.
+> The Python agent is unmodified and runs separately (`hermes serve`); this
+> project is the desktop shell only. Verified stack:
 > [`docs/VERIFICATION.md`](docs/VERIFICATION.md).
 
 HermesNative is an independent client. Hermes is a project of Nous Research.

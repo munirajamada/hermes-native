@@ -276,7 +276,7 @@ Adopted from HyntixCode's `docs/TOOLING.md`. Only the parts that fit a Rust work
 
 | Job | What it proves | Local equivalent |
 |---|---|---|
-| Lint | formatting standard, clippy clean | `scripts/lint.sh` |
+| Lint | formatting, clippy, contract drift | `scripts/lint.sh`, `scripts/check-contract.sh` |
 | Test | workspace suite passes under a display | `scripts/ui-test.sh` |
 | Build (release) | `cargo build --workspace --release --locked` | same |
 | Supply chain | `cargo deny check` | same |
