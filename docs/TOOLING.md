@@ -19,11 +19,20 @@
 | `scripts/build.sh` | `cargo build --workspace --locked` |
 | `scripts/lint.sh` | `cargo fmt --all --check` + `cargo clippy --workspace --all-targets -- -D warnings`; `--fix` formats |
 | `scripts/test.sh` | `cargo test --workspace --locked` |
-| `scripts/check.sh` | lint, then tests |
+| `scripts/ui-test.sh` | tests under Xvfb, the current display, or headless sway |
+| `scripts/check-docs.sh` | required docs exist and relative links resolve |
+| `scripts/check.sh` | lint, docs, then tests |
 | `scripts/install-hooks.sh` | sets `core.hooksPath` to `.githooks` |
 
 `.githooks/pre-push` runs `scripts/check.sh`; `SKIP_GATE=1` is the recorded
 bypass.
+
+## Branch protection
+
+`main` requires the six CI checks (Lint, Test, Build (release), Supply chain,
+Specs, Docs) and a pull request, requires the branch to be up to date, and
+blocks force-push and deletion. The rules apply to admins too, so the owner
+cannot bypass them; changes land through a pull request.
 
 Verification honesty: the gate runs the real tool and prints its output
 verbatim. A compressed summary is not evidence; a suite that does not exist is
