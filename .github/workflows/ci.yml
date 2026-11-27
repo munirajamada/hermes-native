@@ -40,6 +40,8 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    env:
+      LIBGL_ALWAYS_SOFTWARE: "1"
     steps:
       - uses: actions/checkout@v5
       - uses: dtolnay/rust-toolchain@master
@@ -53,7 +55,9 @@ jobs:
             pkg-config libssl-dev libfontconfig1-dev libfreetype-dev \
             libxkbcommon-dev libwayland-dev libxcb1-dev libxcb-render0-dev \
             libxcb-shape0-dev libxcb-xfixes0-dev libgtk-3-dev \
-            libwebkit2gtk-4.1-dev xvfb
+            libwebkit2gtk-4.1-dev xvfb mesa-vulkan-drivers libgl1-mesa-dri
+      - name: Software renderer
+        run: ls /usr/share/vulkan/icd.d/
       - run: ./scripts/ui-test.sh
 
   build:
@@ -90,7 +94,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npx --yes @fission-ai/openspec@1.17.0 validate --specs
+      - run: npx --yes @fission-ai/openspec@1.17.0 validate --all
 
   docs:
     name: Docs
