@@ -48,6 +48,8 @@ scripts/check.sh    # the gate: fmt, clippy, tests
 | `hermes-ui` | gpui-kit UI: shell, panes, chat, pages |
 | `hermes-native` | The binary |
 
+The vendored gateway contract is in [`contract/`](contract/README.md).
+
 ## Documentation
 
 - [`docs/PRD.md`](docs/PRD.md) — requirements and acceptance

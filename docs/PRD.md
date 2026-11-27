@@ -26,7 +26,7 @@ Hermes Desktop ships as an Electron shell around a React renderer. That stack ca
 
 **Context.** Desktop-first, all-day use: many sessions, long transcripts, tool output, file review, terminals, and a preview pane.
 
-**Why now.** The agent and its gateway protocol already exist and are stable enough to be a client contract (263 methods, 79 notifications, 16 server→client requests, 910 schemas). GPUI now supports embedding a native webview in a composed scene, so the last blocking gap — in-client browsing — is closed.
+**Why now.** The agent and its gateway protocol already exist and are stable enough to be a client contract (265 methods, 79 notifications, 16 server→client requests, 915 schemas). GPUI now supports embedding a native webview in a composed scene, so the last blocking gap — in-client browsing — is closed.
 
 **Baseline.** `Live now`: Electron Hermes Desktop. `Target`: HermesNative with the same agent behavior in a smaller, native shell.
 
@@ -212,7 +212,7 @@ Baselines are measured, not copied from vendor claims. A metric without a measur
 |---|---|---|
 | Webview wrapper requires X11; Wayland users blocked | Adoption on native Wayland | Ship XWayland; track upstream composition; Q2 |
 | `gpui-*` crates churn or version drift | Build breaks mid-phase | Pin 0.11.0; isolate in `hermes-ui`; upgrade deliberately |
-| Contract drift across 263 methods | Silent protocol breakage | Generated types; regenerate-and-diff CI |
+| Contract drift across 265 methods | Silent protocol breakage | Generated types; regenerate-and-diff CI |
 | GPUI accessibility/IME weaker than Chromium | Usability gap | Dedicated P5 pass; document gaps; Q4 |
 | Terminal is not provided by gpui-component | P3 slip | Budget real time; `portable-pty` + VT crate |
 | Licence: WebKitGTK LGPL; `lb-wry` fork | Supply-chain/legal | Dynamic link; record explicitly; `deny.toml` allowlist |
@@ -225,7 +225,7 @@ Baselines are measured, not copied from vendor claims. A metric without a measur
 
 - Electron source: `https://github.com/NousResearch/hermes-agent`, monorepo, desktop at `apps/desktop`; local checkout HEAD `caafe5389a` (2026-11-19).
 - Renderer size: 3,798 files under `apps/desktop/src`.
-- Gateway contract: `apps/shared/src/gateway-contract.openrpc.json` — 263 methods, 79 notifications, 16 server requests, 910 schemas.
+- Gateway contract: `contract/gateway-contract.openrpc.json`, vendored from `apps/shared/src/gateway-contract.openrpc.json` at `46c47112` — 265 methods, 79 notifications, 16 server requests, 915 schemas.
 - Contract generator: `scripts/gen_gateway_contracts.py` (Pydantic → TypeScript + OpenRPC). Extend with a Rust emitter.
 - Installed Obscura: `0.1.0-dev+74b4bec` (pre-rendering). Rendering/screencast arrived in v0.2.0. Agent-side only.
 - gpui-kit / gpui-webview / gpui-component `0.11.0`; gpui-fast `0.1.19` (released 2026-11-23).

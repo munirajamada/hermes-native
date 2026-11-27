@@ -6,4 +6,4 @@ license.workspace = true
 publish.workspace = true
 
 [dependencies]
-hermes-ui = { path = "../crates/hermes-ui" }
+hermes-ui = { version = "0.1.0", path = "../crates/hermes-ui" }

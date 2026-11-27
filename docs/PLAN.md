@@ -18,7 +18,7 @@ The Electron app has three boundaries. We replace two.
 | React renderer | React + nanostores | **Rewrite in gpui-kit.** |
 
 Reference implementation: `~/.hermes/hermes-agent/apps/desktop` (3,798 files in `src/`).
-Backend API surface: 263 methods, 79 notifications, 16 server→client requests, 910 schemas.
+Backend API surface: 265 methods, 79 notifications, 16 server→client requests, 915 schemas.
 
 **Not in scope:** the agent, its skills/memory/tools, the Python package, the web dashboard.
 
@@ -85,7 +85,7 @@ This is the highest-leverage part. Do it first and do it properly.
 - **Transport:** WebSocket JSON-RPC, plus HTTP for file/image/artifact endpoints.
 - **Bidirectional:** handle the 16 server→client requests (`approval`, `clarify`, `preview.act`, `preview.read`, `display.install.sudo`, …). These are not notifications; they need responses.
 - **Replay and reconnect:** mirror `session.events.since` + replay semantics; exponential backoff; dedupe by event id.
-- **Codegen:** extend `scripts/gen_gateway_contracts.py` with a Rust emitter writing `hermes-contract/src/generated.rs`. It already walks the supported JSON-Schema subset (objects, enums, const, anyOf-null, arrays, `$ref`, oneOf+discriminator). Reuse that walker; do not write a second generator.
+- **Codegen:** a Rust emitter reads the vendored `contract/gateway-contract.openrpc.json` and writes `hermes-contract/src/generated.rs`. Port the supported JSON-Schema subset (objects, enums, const, anyOf-null, arrays, `$ref`, oneOf+discriminator) from the upstream Python generator; do not run Python in the build.
 - **Sync check:** CI regenerates and diffs the Rust output, exactly like the TypeScript lane does.
 - **Auth:** token and OAuth modes; store secrets in the OS keyring (equivalent of Electron `safeStorage`).
 - **Local dial (verified):** `hermes gateway attach --json` returns the WebSocket URL, a 30-second single-use ticket, and the subprotocols; dial with those or the handshake is `403`. Confirmed: `gateway.ready`, then `session.list`.
@@ -246,7 +246,7 @@ Sizing is deliberately relative. P1 and P3 carry the technical risk; P4 is broad
 |---|---|
 | Webview wrapper requires X11; Wayland users | Ship XWayland; track upstream composition Wayland support |
 | `gpui-fast` / `gpui-webview` version mismatch | Pin all three to 0.11.0; CI check |
-| Contract drift across 263 methods | Generated types + regenerate-and-diff CI |
+| Contract drift across 265 methods | Generated types + regenerate-and-diff CI |
 | GPUI weaker than Chromium on a11y/IME | Dedicated P5 accessibility pass; document gaps |
 | GPUI/gpui-component churn | Pin versions; isolate in `hermes-ui`; upgrade deliberately |
 | Terminal is absent from gpui-component | `portable-pty` + a VT crate; budget real time |
