@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `deny.toml`.
 - Open-source project files: licence, contributing guide, code of conduct,
   security policy, issue and pull-request templates.
+- Pinned toolchain (`rust-toolchain.toml`, `rust-version = "1.100"`).
+- Six-job CI: lint, test under Xvfb, release build, supply chain, specs, docs.
+- `scripts/check-docs.sh` (required files and relative links) and
+  `scripts/ui-test.sh` (tests under a display).
 
 ### Verified
 

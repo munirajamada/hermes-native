@@ -18,33 +18,83 @@ env:
 
 jobs:
   lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@master
         with:
+          toolchain: 1.100.0
           components: clippy, rustfmt
       - uses: Swatinem/rust-cache@v2
+      - name: System dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            pkg-config libssl-dev libfontconfig1-dev libfreetype-dev \
+            libxkbcommon-dev libwayland-dev libxcb1-dev libxcb-render0-dev \
+            libxcb-shape0-dev libxcb-xfixes0-dev libgtk-3-dev \
+            libwebkit2gtk-4.1-dev
       - run: ./scripts/lint.sh
 
   test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.100.0
       - uses: Swatinem/rust-cache@v2
-      - run: ./scripts/test.sh
+      - name: System dependencies and headless display
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            pkg-config libssl-dev libfontconfig1-dev libfreetype-dev \
+            libxkbcommon-dev libwayland-dev libxcb1-dev libxcb-render0-dev \
+            libxcb-shape0-dev libxcb-xfixes0-dev libgtk-3-dev \
+            libwebkit2gtk-4.1-dev xvfb
+      - run: ./scripts/ui-test.sh
 
   build:
+    name: Build (release)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.100.0
       - uses: Swatinem/rust-cache@v2
+      - name: System dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            pkg-config libssl-dev libfontconfig1-dev libfreetype-dev \
+            libxkbcommon-dev libwayland-dev libxcb1-dev libxcb-render0-dev \
+            libxcb-shape0-dev libxcb-xfixes0-dev libgtk-3-dev \
+            libwebkit2gtk-4.1-dev
       - run: cargo build --workspace --release --locked
 
   supply-chain:
+    name: Supply chain
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - uses: EmbarkStudios/cargo-deny-action@v2
+
+  specs:
+    name: Specs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npx --yes @fission-ai/openspec@1.17.0 validate --specs
+
+  docs:
+    name: Docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: ./scripts/check-docs.sh

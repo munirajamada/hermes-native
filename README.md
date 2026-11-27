@@ -28,9 +28,10 @@ client keeps the same agent and the same gateway protocol, in a native shell.
 ## Build
 
 ```sh
-scripts/build.sh    # cargo build --workspace --locked
-scripts/test.sh     # cargo test --workspace --locked
-scripts/check.sh    # the gate: fmt, clippy, tests
+scripts/build.sh      # cargo build --workspace --locked
+scripts/test.sh       # cargo test --workspace --locked
+scripts/ui-test.sh    # tests under Xvfb (or the current display)
+scripts/check.sh      # the gate: fmt, clippy, docs, tests
 ```
 
 ## Layout

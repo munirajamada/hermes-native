@@ -40,8 +40,10 @@ Run it before opening a pull request:
 scripts/check.sh
 ```
 
-It runs `cargo fmt --check`, `cargo clippy -D warnings`, and the workspace
-tests. Quote the raw output in your pull request; a summary is not evidence.
+It runs `cargo fmt --check`, `cargo clippy -D warnings`, the documentation
+check, and the workspace tests. `scripts/ui-test.sh` runs the tests under a
+display (Xvfb or the current session) so window tests work. Quote the raw
+output in your pull request; a summary is not evidence.
 `cargo deny check` enforces the dependency policy when `cargo-deny` is
 installed.
 

@@ -272,21 +272,26 @@ Adopted from HyntixCode's `docs/TOOLING.md`. Only the parts that fit a Rust work
 | `scripts/install-hooks.sh` | Point git at `.githooks` |
 | `scripts/lib.sh` | Shared setup, sourced by the others |
 
-### CI — four jobs, Linux only
+### CI — six jobs, Linux only
 
 | Job | What it proves | Local equivalent |
 |---|---|---|
 | Lint | formatting standard, clippy clean | `scripts/lint.sh` |
-| Test | workspace suite passes | `scripts/test.sh` |
+| Test | workspace suite passes under a display | `scripts/ui-test.sh` |
 | Build (release) | `cargo build --workspace --release --locked` | same |
 | Supply chain | `cargo deny check` | same |
+| Specs | `openspec validate --specs` | same |
+| Docs | required docs exist and relative links resolve | `scripts/check-docs.sh` |
 
-Two checks stay local for now: `openspec validate --specs` (the npm CLI is a
-different major from the installed 1.17.0, so CI would not test the same
-thing) and the knowledge-vault sync (that repository does not own a vault
-folder). Add them when each has a pinned, reproducible install.
+The Test job installs `xvfb` and runs under `xvfb-run`, so UI tests can create
+windows. The Specs job pins the npm CLI to the installed version
+(`@fission-ai/openspec@1.17.0`), so CI and the local binary test the same
+thing. Lint, Test, and Build install the WebKitGTK/GTK/X11 development headers
+the first `gpui-kit` dependency will need.
 
-Pinned `stable` Rust, `Swatinem/rust-cache`, cancel superseded runs, `contents: read`. A single `ubuntu-latest` matrix — no platform hidden behind a green check. Linux-first makes that honest.
+Pinned Rust 1.100.0 (also in `rust-toolchain.toml`), `Swatinem/rust-cache`,
+cancel superseded runs, `contents: read`. A single `ubuntu-latest` matrix — no
+platform hidden behind a green check. Linux-first makes that honest.
 
 ### Dependency policy
 
