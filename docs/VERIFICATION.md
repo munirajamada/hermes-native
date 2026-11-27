@@ -101,3 +101,14 @@ same attach dance.
 The throwaway crates lived in `/tmp/opencode/stacktest` with a target dir on
 the root filesystem (`/tmp` is a 6.8 GB tmpfs and a gpui-fast build fills it).
 The snippets above are the whole test.
+## P0: first window and round-trip (2026-11-27)
+
+- `cargo run -p hermes-native` on X11/XWayland opened
+  `com.hyntix.hermesnative` titled `HermesNative`.
+- The binary obtained a grant with `hermes gateway attach --json`, received
+  `gateway.ready`, and `session.list` returned one live session.
+- The window shows `gateway connected · 1 live session(s)`.
+- `cargo test -p hermes-gateway` (5 tests) covers the ticket subprotocol, a
+  round-trip, out-of-order correlation, and reconnect.
+- `cargo run -p hermes-contract-gen -- --check` reports 265 methods,
+  79 notifications, and 16 server requests.

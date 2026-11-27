@@ -21,7 +21,8 @@
 | `scripts/test.sh` | `cargo test --workspace --locked` |
 | `scripts/ui-test.sh` | tests under Xvfb, the current display, or headless sway |
 | `scripts/check-docs.sh` | required docs exist and relative links resolve |
-| `scripts/check.sh` | lint, docs, then tests |
+| `scripts/check-contract.sh` | generated contract types match the vendored OpenRPC |
+| `scripts/check.sh` | lint, docs, contract, then tests |
 | `scripts/install-hooks.sh` | sets `core.hooksPath` to `.githooks` |
 
 `.githooks/pre-push` runs `scripts/check.sh`; `SKIP_GATE=1` is the recorded
