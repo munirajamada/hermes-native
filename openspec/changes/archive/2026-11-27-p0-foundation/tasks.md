@@ -22,7 +22,7 @@
 ## 4. Round trip
 
 - [x] 4.1 Call `session.list` from the binary and log the count. Verify: the run prints the number of live sessions from the local gateway.
-- [ ] 4.2 Pass the full gate and CI. Verify: `scripts/check.sh` exits 0 and all six checks are green.
+- [x] 4.2 Pass the full gate and CI. Verify: `scripts/check.sh` exits 0 and all six checks are green.
 
 ## Workflow follow-up
 
