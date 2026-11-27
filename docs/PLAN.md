@@ -280,7 +280,7 @@ Adopted from HyntixCode's `docs/TOOLING.md`. Only the parts that fit a Rust work
 | Test | workspace suite passes under a display | `scripts/ui-test.sh` |
 | Build (release) | `cargo build --workspace --release --locked` | same |
 | Supply chain | `cargo deny check` | same |
-| Specs | `openspec validate --specs` | same |
+| Specs | `openspec validate --all` (changes and specs) | same |
 | Docs | required docs exist and relative links resolve | `scripts/check-docs.sh` |
 
 The Test job installs `xvfb` and runs under `xvfb-run`, so UI tests can create
