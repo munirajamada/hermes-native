@@ -61,5 +61,5 @@ output. A compressed summary is not evidence.
 ## Working notes
 
 - `.planning/` is git-ignored working state (`/pwf`); `openspec/` is the
-  tracked record of decisions.
+  tracked record of decisions, and `docs/adr/` records the architectural ones.
 - `.codegraph/` is a git-ignored index (`codegraph explore "..."`).
