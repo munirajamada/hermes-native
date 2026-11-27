@@ -272,7 +272,7 @@ Adopted from HyntixCode's `docs/TOOLING.md`. Only the parts that fit a Rust work
 | `scripts/install-hooks.sh` | Point git at `.githooks` |
 | `scripts/lib.sh` | Shared setup, sourced by the others |
 
-### CI — six jobs, Linux only
+### CI — four jobs, Linux only
 
 | Job | What it proves | Local equivalent |
 |---|---|---|
@@ -280,8 +280,11 @@ Adopted from HyntixCode's `docs/TOOLING.md`. Only the parts that fit a Rust work
 | Test | workspace suite passes | `scripts/test.sh` |
 | Build (release) | `cargo build --workspace --release --locked` | same |
 | Supply chain | `cargo deny check` | same |
-| Specs | `openspec validate --specs` | same |
-| Docs | knowledge mirror reproducible | `scripts/sync-knowledge.sh --check` |
+
+Two checks stay local for now: `openspec validate --specs` (the npm CLI is a
+different major from the installed 1.17.0, so CI would not test the same
+thing) and the knowledge-vault sync (that repository does not own a vault
+folder). Add them when each has a pinned, reproducible install.
 
 Pinned `stable` Rust, `Swatinem/rust-cache`, cancel superseded runs, `contents: read`. A single `ubuntu-latest` matrix — no platform hidden behind a green check. Linux-first makes that honest.
 
